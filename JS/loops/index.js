@@ -98,5 +98,6 @@ const ratingChart = movies => {
     return movieChart; 
 }
 
+
 // console.log(ratingChart(moviesTopRatedData)); 
 
