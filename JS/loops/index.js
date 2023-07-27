@@ -99,5 +99,5 @@ const ratingChart = movies => {
 }
 
 
-// console.log(ratingChart(moviesTopRatedData)); 
+console.log(ratingChart(moviesTopRatedData)); 
 
