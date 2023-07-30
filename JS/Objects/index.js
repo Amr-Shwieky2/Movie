@@ -89,15 +89,15 @@ movieDatabase.addRating("Inception", 4);
 movieDatabase.addRating("Interstellar", 4);
 
 // Print all movies in the database
-console.log("All Movies:", movieDatabase.movies);
+// console.log("All Movies:", movieDatabase.movies);
 
-// Search for movies containing the word "the"
-const searchResults = movieDatabase.searchMovie("The");
-console.log("Search Results:", searchResults);
+// // Search for movies containing the word "the"
+// const searchResults = movieDatabase.searchMovie("The");
+// console.log("Search Results:", searchResults);
 
-// // Sort movies by average rating in descending order
-// movieDatabase.sortMoviesByRating();
-// console.log("Sorted by Rating:", movieDatabase.movies);
+// Sort movies by average rating in descending order
+movieDatabase.sortMoviesByRating();
+console.log("Sorted by Rating:", movieDatabase.movies);
 
 // // Sort movies by title in alphabetical order
 // movieDatabase.sortMoviesByTitle();
