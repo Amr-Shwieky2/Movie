@@ -103,4 +103,3 @@ function decodeQuote(quote){
  
   return quote.replace(/[1-5]/g, (matched) => mapping[matched]);
 }
-console.log(decodeQuote("Th3 dr34m 1s r34l!"));
