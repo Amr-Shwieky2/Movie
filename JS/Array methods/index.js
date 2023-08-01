@@ -63,5 +63,4 @@ function SortMovies(movies)
     movies_sorted = movies.sort((movie1, movie2) => movie1.votes - movie2.votes);
     return movies_sorted.map(movie => movie.title)
 } 
-console.log(title_movies(movies));
-console.log(SortMovies(movies));
+
