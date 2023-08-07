@@ -1,13 +1,22 @@
-
-var twoSum = function(nums, target) {
-    const map = {}
-    for (let i=0; i<nums.length; i++) {
-    
-      if (map[ nums[i] ] !== undefined) {
-         return [ map[nums[i]], i];
-      }
-    else   map[target-nums[i]] = i;
-    
+/**
+* @param {string[]} strs
+ * @return {string}
+ */
+const longestCommonPrefix = function(strs) {
+    let answer=""; 
+    let temp="";
+    // if(strs.length === 1 ) return temp ; 
+    for(let j=0;j<strs[0].length;j++){
+        temp+=strs[0][j]; 
+        for(let i=1;i<strs.length;i++){
+            if(strs[i][j] !== strs[0][j]){
+                return answer; 
+            }
+        }
+        answer=temp; 
+    }  
+    return answer; 
+  
     }
-};
-console.log(twoSum([4,5,7,5,3],7));
+
+    console.log(longestCommonPrefix(["a"])); 

@@ -1,5 +1,5 @@
 const movieDatabase = {
-    movies : [{title: "oppenhimer", ratings :[4,7,6], averageRating:5.3}], 
+    movies: [{title: "oppenhimer", ratings :[4,7,6], averageRating:5.3}], 
     addMovie: function(movieTitle){
         this.movies.push({ title: movieTitle, ratings: [], averageRating: 0});  
     },
@@ -7,9 +7,9 @@ const movieDatabase = {
         this.movies= this.movies.filter(movie => movieTitle !== movie.title); 
     }, 
     addRating : (movieTitle, rating) => { 
-        for(let movie of this.movies)
-            if(movie.title === movieTitle)
-                movie.ratings.push(rating); 
+        for(let i=0;i<this.movies.length;i++)
+            if(movie.title[i] === movieTitle)
+            movie.ratings[i].push(rating); 
 
         this.averageRating(movieTitle); 
     },
