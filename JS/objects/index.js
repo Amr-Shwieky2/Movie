@@ -7,10 +7,11 @@ const movieDatabase = {
         this.movies= this.movies.filter(movie => movieTitle !== movie.title); 
     }, 
     addRating : (movieTitle, rating) => { 
-        for(let i=0;i<this.movies.length;i++)
+        console.log(this.movies1);
+        for(let movie of this.movies){
             if(movie.title[i] === movieTitle)
-            movie.ratings[i].push(rating); 
-
+                movie.ratings[i].push(rating); 
+        }
         this.averageRating(movieTitle); 
     },
     removeRating: (movieTitle, rating) => { 
@@ -98,4 +99,4 @@ movieDatabase.sortMoviesByRating(); // Sort the movies by rating
 movieDatabase.sortMoviesByTitle(); // Sort the movies by title
 movieDatabase.removeMovie("banana"); // Sort the movies by title
 movieDatabase.removeMovie("oppenhimer"); // Sort the movies by title
-console.log(movieDatabase.movies); // Log the sorted database
+// console.log(movieDatabase.movies); // Log the sorted database
