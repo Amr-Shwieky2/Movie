@@ -58,17 +58,38 @@ class User{
 }
 
 
-const barbie = new Movie("barbie",90,"greta", "comdey"); 
-// barbie.addRating(5); 
-const got = new Series("game of thrones",60, "8"); 
-const breakingBad = new Series("breaking bad",60, "5"); 
+// Create some media
+console.log("Creating media");
+const movie = new Movie("Inception", "2 hours 28 minutes", "Christopher Nolan", "Science fiction");
+const series = new Series("Breaking Bad", "45 minutes per episode", 5);
+console.log(movie.displayDetails());
+console.log(series.displayDetails());
 
-const mahmoud=new User("mahmoud"); 
-mahmoud.addMedia(barbie); 
-mahmoud.addMedia(got); 
-mahmoud.addMedia(breakingBad); 
-console.log(mahmoud.rateMedia(barbie,7));
-// console.log(barbie.calculateAverageRating())
-console.log(mahmoud.displayWatchedMedia());
+// Create a user
+console.log("Creating user");
+const user = new User("Alice");
+console.log(`User: ${user.username}`);
+
+// Add media to the user's watched list
+console.log("Adding media to watched list");
+user.addMedia(movie);
+user.addMedia(series);
+console.log(user.displayWatchedMedia());
+
+// Rate some media
+console.log("Rating media");
+user.rateMedia(movie, 5);
+user.rateMedia(series, 4);
+console.log(user.displayWatchedMedia());
+
+// Show average rating of media
+console.log("Average Ratings");
+console.log(movie.calculateAverageRating());
+console.log(series.calculateAverageRating());
+
+// Try to rate a media that the user hasn't watched
+console.log("Try to rate unwatched media");
+const unwatchedMovie = new Movie("Unwatched Movie", "2 hours", "Unknown Director", "Unknown Genre");
+console.log(user.rateMedia(unwatchedMovie, 3));
 
 

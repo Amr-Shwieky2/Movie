@@ -1,22 +1,42 @@
 /**
-* @param {string[]} strs
- * @return {string}
+ * @param {string} s
+ * @return {boolean}
  */
-const longestCommonPrefix = function(strs) {
-    let answer=""; 
-    let temp="";
-    // if(strs.length === 1 ) return temp ; 
-    for(let j=0;j<strs[0].length;j++){
-        temp+=strs[0][j]; 
-        for(let i=1;i<strs.length;i++){
-            if(strs[i][j] !== strs[0][j]){
-                return answer; 
+var isValid = function(s) {
+    const map={
+    "(" : 1, 
+    ")": -1, 
+    "[": 2, 
+    "]":-2,
+    "{":3, 
+    "}":-3
+    }
+    if(s.length === 1)return false; 
+    let count=0; 
+    while(s.length !== 0 ){
+        if(map[s[count]] < 0){
+            if(map[s[count]] + map[s[count-1]] !== 0 )
+            return false;
+            else {
+                s=s.slice(0,count-1)+s.slice(count+1,s.length); 
+                count=0; 
             }
         }
-        answer=temp; 
-    }  
-    return answer; 
-  
+        if(count === s.length-1) return false; 
+        count++; 
     }
+    return true; 
 
-    console.log(longestCommonPrefix(["a"])); 
+    }
+console.log(isValid("[{(){}}]"));
+
+// Input: s = "()"
+// Output: true
+// Example 2:
+
+// Input: s = "()[]{}"
+// Output: true
+// Example 3:
+
+// Input: s = "(]"
+// Output: false
