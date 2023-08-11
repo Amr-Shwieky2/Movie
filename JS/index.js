@@ -1,12 +1,12 @@
 /**
- * @param {number[]} prices
- * @return {number}
+ * @param {string} s
+ * @return {boolean}
  */
-var maxProfit = function(prices) {
-    let max=0; 
-    const map={}; 
-    for(let i=0;i<prices.length;i++)
-        map.prices[i]= i;
-    
+var isPalindrome = function(s) {
+    const str =s.replace(/[^a-z0-9]/gi, '').toLowerCase();
+    let arr = str.split(""); 
+    let arr1=[...arr].reverse();  
+    return JSON.stringify(arr) === JSON.stringify(arr1); 
 };
-console.log(maxProfit([7,1,5,3,6,4])); 
+const str =" ";
+console.log(isPalindrome(str)); 
