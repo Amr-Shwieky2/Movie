@@ -44,7 +44,6 @@ const enemiesToProcess = [
     id: 1,
     name: "doflamingo",
     health:5
-
     },
     {
         id: 4,
