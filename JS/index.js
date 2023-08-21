@@ -1,12 +1,9 @@
 /**
- * @param {string} s
- * @return {boolean}
+ * @param {number[]} nums
+ * @return {number}
  */
-var isPalindrome = function(s) {
-    const str =s.replace(/[^a-z0-9]/gi, '').toLowerCase();
-    let arr = str.split(""); 
-    let arr1=[...arr].reverse();  
-    return JSON.stringify(arr) === JSON.stringify(arr1); 
+var removeDuplicates = function(nums) {
+    let res = new Set (nums); 
+    return res; 
 };
-const str =" ";
-console.log(isPalindrome(str)); 
+console.log(removeDuplicates([0,0,1,1,1,2,2,3,4])); 
