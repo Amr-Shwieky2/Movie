@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Chaining with Multiple API Calls to JSONPlaceholder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .user {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f3f3f3;
+        }
+
+        h2 {
+            color: #040433;
+        }
+
+        .posts {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .post {
+            margin: 5px 0;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+
+        .post strong {
+            color: #070956;
+
+        }
+        .loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+  border-radius: 50%;
+  margin: 0 5px;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Users and Their Posts</h1>
+        <div class="loading-dots" >
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          
+        <div id="users"></div>
+    </div>
+
+<script>
+    const URL_JSON = 'https://jsonplaceholder.typicode.com'; 
+    let usersContainer = document.getElementById("users"); 
+    let head = document.querySelector(".container h1"); 
+    fetch(`${URL_JSON}/users`)
+    .then(response => response.json())
+    .then(users => users.forEach(user => {
+        let userDiv = document.createElement("div"); 
+        userDiv.classList.add("user"); 
+        userDiv.innerHTML = `
+        <h2>${user.name}</h2>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <div class="posts"></div>
+        `;
+        usersContainer.appendChild(userDiv); 
+        fetch(`${URL_JSON}/posts?userId=${user.id}`)
+        .then(response => response.json())
+        .then(posts =>{
+            let postsContainer = userDiv.querySelector(".posts"); 
+            let header = document.createElement("h2"); 
+            header.textContent= "posts"; 
+            postsContainer.appendChild(header); 
+            posts.forEach(post =>{
+                let postDiv = document.createElement("div"); 
+                postDiv.classList.add("post"); 
+                postDiv.innerHTML = `<strong>${post.title}</strong>
+                <br>${post.body}`;
+                postsContainer.appendChild(postDiv); 
+            })
+
+        })
+    }))
+    .then(()=>{
+        let animate = document.querySelector(".loading-dots"); 
+        animate.style.display= "none"; 
+
+    })
+    .catch(error => heading.textContent="error"); 
+
+
+</script>
+</body>
+
+</html>
