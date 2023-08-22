@@ -99,7 +99,7 @@
 <script>
     const URL_JSON = 'https://jsonplaceholder.typicode.com'; 
     let usersContainer = document.getElementById("users"); 
-    let head = document.querySelector(".container h1"); 
+    let heading = document.querySelector(".container h1"); 
     fetch(`${URL_JSON}/users`)
     .then(response => response.json())
     .then(users => users.forEach(user => {
@@ -133,7 +133,11 @@
         animate.style.display= "none"; 
 
     })
-    .catch(error => heading.textContent="error"); 
+    .catch(err =>{
+        heading.textContent=err;
+        let animate = document.querySelector(".loading-dots"); 
+        animate.style.display= "none";
+    });
 
 
 </script>
