@@ -61,7 +61,7 @@
     let usersContainer = document.getElementById("users"); 
     let errorMessage = document.getElementById("error"); 
 
-    fetch(`${URL_JSON}/uss`)
+    fetch(`${URL_JSON}/users`)
     .then( (response)=> {
         if(response.status !== 200)
         throw new Error(`status: ${response.status}`);
@@ -80,8 +80,8 @@
 
     })
     .catch (err => {
-        console.error(err); 
         errorMessage.textContent=`An Error occurred: ${err}.`;
+        
     })
 </script>
 
