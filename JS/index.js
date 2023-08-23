@@ -1,9 +1,21 @@
 /**
- * @param {number[]} nums
- * @return {number}
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
  */
-var removeDuplicates = function(nums) {
-    let res = new Set (nums); 
-    return res; 
+var isAnagram = function(s, t) {
+    if(s.length!=t.length){
+        return false;
+    }
+    //cắt chuỗi thành mảng
+    const arr = s.split('');
+    // khởi tạo đối tượng set
+    const unique = new Set(arr);
+    for (let value of unique) {
+        if((s.split(value).length) != (t.split(value).length)){
+            return false;
+        }   
+    }
+   return true;  
 };
-console.log(removeDuplicates([0,0,1,1,1,2,2,3,4])); 
+console.log(isAnagram("car","rac")); 

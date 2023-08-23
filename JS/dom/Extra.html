@@ -75,14 +75,18 @@
   visCode.value= sms;
   let str=false; 
   let i=1;
-  
+
   let num1 = numList.getElementById("num1"); 
-  num1.addEventListener("keyup", function (){num1.value="5"}); 
+  num1.addEventListener("keyup", redBack); 
 
     // numList.forEach(input =>{
         // numList[1].addEventListener("keyup",function() { }); 
     //     i++;
     // })
+    function redBack(){
+      let heading = document.querySelector("#confirm-codes h1"); 
+      heading.style.display = "none"; 
+    }
 
     numList[1].focus(); 
  
