@@ -1,21 +1,9 @@
 /**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
  */
-var isAnagram = function(s, t) {
-    if(s.length!=t.length){
-        return false;
-    }
-    //cắt chuỗi thành mảng
-    const arr = s.split('');
-    // khởi tạo đối tượng set
-    const unique = new Set(arr);
-    for (let value of unique) {
-        if((s.split(value).length) != (t.split(value).length)){
-            return false;
-        }   
-    }
-   return true;  
+var removeElement = function(nums, val) {
+      
 };
 console.log(isAnagram("car","rac")); 
