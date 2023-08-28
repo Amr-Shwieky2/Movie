@@ -227,20 +227,20 @@
     </div>
 
     <script>
-        const GITHUB_API_URL = 'https://api.github.com/users';
+        const GITHUB_API_URL = 'https://api.github.com/users/';
 
         const userDetailContainer = document.getElementById('user-details');
         const searchButton = document.getElementById('searchButton');
         const searchInput = document.getElementById("searchField");
 
-        searchButton.addEventListener("click",()=>{
-            fetchUser(searchInput.textContent);
+        searchButton.addEventListener("click", () => {
+            fetchUser(searchInput.value);
         });
 
         async function fetchUser(username) {
             try {
-                const res = await fetch(`${GITHUB_API_URL}/${username}`);
-                const user = res.json();
+                const res = await fetch(`${GITHUB_API_URL}${username}`);
+                const user = await res.json();
                 displayUser(user);
             }
             catch (err) {
@@ -250,30 +250,30 @@
 
         function displayUser(user) {
             const userHTML = `<div class="card grid-2">
-  <div class="all-center"><img src=${user.avatar_url} class="round-img"
-      alt="avatar">
-    <h2>${user.name}</h2>
-    <p>Location:${user.location}</p>
-  </div>
-  <div class="all-center">
-    <h3 class="text-center">Bio</h3>
-    <p>${user.bio}</p>
-    <ul>
-      <li><strong>Username:</strong>${user.login}</li>
-      <li></li>
-      <li><strong>Site: </strong><a href=${user.blog} target="_blank"
-          rel="noreferrer">${user.blog}</a></li>
-      <li></li>
-    </ul><a href=${user.html_url}  class="btn btn-success my-1" target="_blank" rel="noreferrer">To
-      Github Profile</a>
-  </div>
-</div>
-<div class="card text-center">
-  <div class="badge badge-dark">Followers:${user.followers}</div>
-  <div class="badge badge-success">Following: ${user.following}</div>
-  <div class="badge badge-info">Public Repositories: ${user.public_repos}</div>
-  <div class="badge badge-light">Public Gists: ${user.public_gists}</div>
-</div>`
+                                <div class="all-center"><img src=${user.avatar_url} class="round-img"
+                                    alt="avatar">
+                                    <h2>${user.name}</h2>
+                                    <p>Location:${user.location}</p>
+                                </div>
+                                <div class="all-center">
+                                    <h3 class="text-center">Bio</h3>
+                                    <p>${user.bio}</p>
+                                    <ul>
+                                    <li><strong>Username:</strong>${user.login}</li>
+                                    <li></li>
+                                    <li><strong>Site: </strong><a href=${user.blog} target="_blank"
+                                        rel="noreferrer">${user.blog}</a></li>
+                                    <li></li>
+                                    </ul><a href=${user.html_url}  class="btn btn-success my-1" target="_blank" rel="noreferrer">To
+                                    Github Profile</a>
+                                </div>
+                                </div>
+                                <div class="card text-center">
+                                <div class="badge badge-dark">Followers:${user.followers}</div>
+                                <div class="badge badge-success">Following: ${user.following}</div>
+                                <div class="badge badge-info">Public Repositories: ${user.public_repos}</div>
+                                <div class="badge badge-light">Public Gists: ${user.public_gists}</div>
+                                </div>`
 
             userDetailContainer.innerHTML = userHTML;
         }
