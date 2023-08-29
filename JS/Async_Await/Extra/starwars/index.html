@@ -194,13 +194,13 @@
             </div>
         </div>
     </div>
-    <div class="spinner-container" id="movie-spinner">
+    <div class="spinner-container" id="movie-spinner" style="display: none">
         <img src="./images/spinner.gif" alt="Spinner" class="spinner">
     </div>
     <div class="container" id="movieContainer">
     </div>
 
-    <div class="spinner-container" id="characters-spinner">
+    <div class="spinner-container" id="characters-spinner" style="display: none">
         <img src="./images/spinner.gif" alt="Spinner" class="spinner">
     </div>
     <div class="characters-card-container"></div>
@@ -295,8 +295,9 @@
                     const characterCard = createCharacterCard(character);
                     charactersContainer.innerHTML += characterCard;
                     charactersCardContainer.appendChild(charactersContainer);
-                }))
-                charactersSpinner.style.display = "none";
+                })).then(()=>{
+                    charactersSpinner.style.display = "none";
+                })
                 charactersCardContainer.style.display = "block";
             }
             catch (err) {
@@ -322,6 +323,7 @@
         }
         async function fetchMovieData(selectedUrl) {
             try {
+                movieSpinner.style.display="flex";
                 const data = await fetchData(selectedUrl);
                 searchMovie(data.title);
                 appendCharacterCard(selectedUrl);
