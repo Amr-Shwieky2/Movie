@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Movies</title>
+    <style>
+        body {
+            font-family: 'Rubik', Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #ECE0FF;
+            padding: 10px;
+            color: white;
+        }
+
+        .navbar .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin-inline: auto;
+        }
+
+        .navbar-logo {
+            background-color: #fff;
+            border-radius: 8px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+        }
+
+        .navbar-logo img {
+            width: 30px;
+        }
+
+        .navbar-logo span {
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            padding-left: 10px;
+        }
+
+        .navbar-select {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-select select {
+            padding: 0 10px;
+            border-radius: 8px;
+            border: none;
+            height: 45px;
+            width: 500px;
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .container {
+            border-radius: 8px;
+            max-width: 760px;
+            margin: 50px auto;
+            background: #FDFDFD;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .spinner-container {
+            margin: 50px auto;
+            background: #FDFDFD;
+            border-radius: 8px;
+            margin: 50px auto;
+            max-width: 760px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 550px;
+        }
+
+        .movie-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .poster {
+            border-radius: 8px;
+            max-width: 100%;
+            flex: 1;
+        }
+
+        .movie-details {
+            flex: 2;
+            padding-left: 20px;
+        }
+
+        .movie-details h1 {
+            color: #430B98;
+        }
+
+        .movie-details p {
+            margin: 15px 0;
+        }
+
+        .info {
+            padding: 5px 0;
+        }
+
+        .info span:first-child {
+            color: #430B98;
+        }
+
+        .info-label {
+            color: #430B98;
+            font-weight: bold;
+        }
+
+        .characters-card-container {
+            display: none;
+            border-radius: 8px;
+            max-width: 760px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .characters-container {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .characters-container h2,
+        .characters-container h3 {
+            color: #430B98;
+        }
+
+        .character-card {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .character-card strong {
+            color: #430B98;
+        }
+
+        .character-card p {
+            margin: 5px 0;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .error h1 {
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="./images/logo.png" alt="Logo">
+                <span>Star Wars Movies</span>
+            </div>
+            <div class="navbar-select">
+                <select id="movieSelect">
+                    <option value="https://swapi.dev/api/films/1/" selected="selected">A New Hope</option>
+                    <option value="https://swapi.dev/api/films/2/">The Empire Strikes Back</option>
+                    <option value="https://swapi.dev/api/films/3/">Return of the Jedi</option>
+                    <option value="https://swapi.dev/api/films/4/">The Phantom Menace</option>
+                    <option value="https://swapi.dev/api/films/5/">Attack of the Clones</option>
+                    <option value="https://swapi.dev/api/films/6/">Revenge of the Sith</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="spinner-container" id="movie-spinner">
+        <img src="./images/spinner.gif" alt="Spinner" class="spinner">
+    </div>
+    <div class="container" id="movieContainer">
+    </div>
+
+    <div class="spinner-container" id="characters-spinner">
+        <img src="./images/spinner.gif" alt="Spinner" class="spinner">
+    </div>
+    <div class="characters-card-container"></div>
+    <script>
+
+        const SWAPI_URL = 'https://swapi.dev/api/films';
+        const OMDB_URL = 'http://www.omdbapi.com/?apikey=e8c6695b';
+
+        const movieContainer = document.getElementById('movieContainer');
+        const movieSpinner = document.getElementById('movie-spinner');
+        const charactersCardContainer = document.querySelector('.characters-card-container');
+        const charactersSpinner = document.getElementById('characters-spinner');
+        const movieSelect = document.getElementById("movieSelect");
+
+        movieSelect.addEventListener("change", (movieSelect) => {
+            const selectedUrl = movieSelect.target.value;
+            fetchMovieData(selectedUrl);
+        })
+
+        async function fetchData(url) {
+            try {
+                const response = await fetch(url);
+                return response.json();
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
+        function createMovieTemplate(movie) {
+            let movieHTMl = `
+            <div class="movie-content">
+  <img
+    src=${movie.Poster}; 
+    alt="Movie Poster" class="poster">
+  <div class="movie-details">
+    <h1>${movie.Title}</h1>
+    <p></p>
+    <div class="info">
+      <div class="info-label">Genre:</div>
+      <div>${movie.Genre}</div>
+    </div>
+    <div class="info">
+      <div class="info-label">Year:</div>
+      <div>${movie.Year}</div>
+    </div>
+    <div class="info">
+      <div class="info-label">Director:</div>
+      <div>${movie.Director}</div>
+    </div>
+    <div class="info">
+      <div class="info-label">Actors:</div>
+      <div>${movie.Actors}</div>
+    </div>
+    <div class="info">
+      <div class="info-label">Ratings:</div>
+      <div id="movieRatings">
+      </div>
+    </div>
+  </div>
+</div>; `
+            return movieHTMl;
+        }
+
+        function createCharacterCard(character) {
+            let characterCard = `
+            <div class="character-card">
+                <h3>${character.name}</h3>
+                <p><strong>Birth Year:</strong> ${character.birth_year}</p>
+                <p><strong>Gender:</strong> ${character.gender}</p>
+                <p><strong>Home world:</strong>${character.home}</p>
+            </div>` ;
+            return characterCard;
+        }
+        async function appendCharacterCard(movieUrl) {
+            try {
+                charactersCardContainer.style.display = "none";
+                charactersSpinner.style.display = "flex";
+                charactersCardContainer.innerHTML = "";
+                const movieData = await fetchData(movieUrl);
+                const charactersContainer = document.createElement("div");
+                charactersContainer.classList.add("characters-container");
+                const title = document.createElement("h2");
+                title.textContent = "Characters:";
+                const charactersUrl = movieData.characters;
+                const characterDetailsPromises = charactersUrl.map(characterUrl => {
+                    return getCharacterDetails(characterUrl);
+                })
+                console.log(characterDetailsPromises);
+                let charactersDetails = Promise.all(characterDetailsPromises);
+                console.log(charactersDetails)
+                charactersDetails.then(res => res.forEach(character => {
+                    const characterCard = createCharacterCard(character);
+                    charactersContainer.innerHTML += characterCard;
+                    charactersCardContainer.appendChild(charactersContainer);
+                }))
+                charactersSpinner.style.display = "none";
+                charactersCardContainer.style.display = "block";
+            }
+            catch (err) {
+                console.error(err);
+
+            }
+        }
+        async function getCharacterDetails(characterUrl) {
+            try {
+                const characterData = await fetchData(characterUrl);
+                const home = await fetchData(characterData.homeworld);
+                let character = {
+                    name: characterData.name,
+                    birth_year: characterData.birth_year,
+                    gender: characterData.gender,
+                    home: home.name
+                }
+                return character;
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        async function fetchMovieData(selectedUrl) {
+            try {
+                const data = await fetchData(selectedUrl);
+                searchMovie(data.title);
+                appendCharacterCard(selectedUrl);
+            }
+            catch (err) {
+                console.error("Error", err);
+            }
+        }
+        async function searchMovie(title) {
+            try {
+                movieSpinner.style.display = "flex";
+                const data = await fetchData(`${OMDB_URL}&t=${title}`);
+                const template = createMovieTemplate(data);
+                movieSpinner.style.display = "none";
+                movieContainer.style.display = "block";
+                movieContainer.innerHTML = template;
+                console.log(data.Ratings)
+                handleRatings(data.Ratings, document.getElementById('movieRatings'));
+
+            } catch (err) {
+                console.error("Error", err);
+            }
+        }
+        function handleRatings(ratings, targetDiv) {
+            if (!ratings) return
+            ratings.forEach(rating => {
+                if (["Internet Movie Database", "Rotten Tomatoes",
+                    "Metacritic"].includes(rating.Source)) {
+                    const ratingDiv = document.createElement("div");
+                    const sourceSpan = document.createElement("span");
+                    const valueSpan = document.createElement("span");
+                    sourceSpan.style.fontWeight = "bold";
+                    sourceSpan.innerText = `${rating.Source}: `;
+                    valueSpan.innerText = `${rating.Value}`;
+                    ratingDiv.appendChild(sourceSpan);
+                    ratingDiv.appendChild(valueSpan);
+                    targetDiv.appendChild(ratingDiv);
+                }
+            });
+        }
+        async function initializeMovies() {
+            try {
+                const response = await fetchData(SWAPI_URL);
+                const data = await response.json();
+                const selectedUrl = movieSelect.options[movieSelect.selectedIndex].value;
+                fetchMovieData(selectedUrl);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
