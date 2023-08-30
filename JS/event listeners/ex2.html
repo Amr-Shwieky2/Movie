@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            padding: 20px;
+        }
+
+        .faq-container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .faq-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .faq-answer {
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Interactive FAQ Section</title>
+</head>
+
+<body>
+    <div class="faq-container">
+        <div class="faq-item" id="faq1">
+            <div class="faq-question">What is the course duration?</div>
+            <div class="faq-answer">The course duration is 6 months.</div>
+        </div>
+        <div class="faq-item" id="faq2">
+            <div class="faq-question">Are there any prerequisites?</div>
+            <div class="faq-answer">Basic understanding of HTML, CSS, and JavaScript is recommended.</div>
+        </div>
+        <div class="faq-item" id="faq3">
+            <div class="faq-question">How much does the course cost?</div>
+            <div class="faq-answer">The course cost is $1000.</div>
+        </div>
+    </div>
+
+    <script>
+        const question1 = document.querySelector("#faq1 .faq-question");
+        const question2 = document.querySelector("#faq2 .faq-question");
+        const question3 = document.querySelector("#faq3 .faq-question");
+        const answer1 = document.querySelector("#faq1 .faq-answer");
+        const answer2 = document.querySelector("#faq2 .faq-answer");
+        const answer3 = document.querySelector("#faq3 .faq-answer");
+
+        question1.addEventListener("click", () => {
+            showAnswer(answer1)
+        });
+        question2.addEventListener("click", () => {
+            showAnswer(answer2)
+        });
+        question3.addEventListener("click", () => {
+            showAnswer(answer3)
+        });
+
+        function showAnswer(answer) {
+            if (answer.classList.contains("faq-answer")) {
+                answer.classList.remove("faq-answer");
+            }
+            else answer.classList.add("faq-answer");
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
